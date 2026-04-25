@@ -1,0 +1,31 @@
+  .ORG 2000H
+
+DATA SEGMENT
+    NUM1 DW AAAAH
+    NUM2 DW BBBBH
+    SUM  DW 0000H
+    CARRY DB 00H
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+
+START:
+    MOV AX, DATA
+    MOV DS, AX
+
+    MOV AX, NUM1
+    MOV BL, 00H       ; Clear carry register
+
+    ADD AX, NUM2
+    JNC NO_CARRY
+    INC BL
+
+NO_CARRY:
+    MOV SUM, AX
+    MOV CARRY, BL
+
+    HLT               ; Stop execution
+
+CODE ENDS
+END START
